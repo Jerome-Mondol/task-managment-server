@@ -7,6 +7,7 @@ import cors from 'cors'
 import connectDB from './config/db.js'
 import authRoutes from './routes/authRoutes.js'
 import cookieParser from 'cookie-parser'
+import authMiddleware from './middleware/authMiddleware.js'
 
 app.use(cookieParser());
 
@@ -21,6 +22,10 @@ app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
     res.send("API is running");
+})
+
+app.get('/data', authMiddleware, (req, res) => {
+    res.json({ message: "This is protected data", user: req.user });
 })
 
 

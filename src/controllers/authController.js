@@ -60,14 +60,14 @@ export const loginUser = async(req, res) => {
             { expiresIn: '1h' }
         )
 
-        res.status(200).json({
+    
+
+        return res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+        }).status(200).json({
             message: "Login successful",
             token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email
-            }
         });
     }
     catch(error) {
